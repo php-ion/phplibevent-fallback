@@ -1,0 +1,22 @@
+{
+  "name": "phpion/ion-libevent-fallback",
+  "description": "libevent fallback via PHP ION",
+  "type": "project",
+  "authors": [
+    {
+      "name": "Ivan Shalganov",
+      "email": "a.cobest@gmail.com"
+    }
+  ],
+  "autoload": {
+    "psr-4": {
+       "ION\\PHPLibEventFallback\\": "src/"
+    },
+    "files": ["src/functions.php"]
+  },
+
+  "require": {
+    "php": "^7.1",
+    "phpion/phpion": "*"
+  }
+}

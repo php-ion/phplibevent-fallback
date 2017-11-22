@@ -1,0 +1,63 @@
+{
+    "_readme": [
+        "This file locks the dependencies of your project to a known state",
+        "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
+        "This file is @generated automatically"
+    ],
+    "content-hash": "c8300610049b17cdbee2b69db0c43930",
+    "packages": [
+        {
+            "name": "phpion/phpion",
+            "version": "0.8.4",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/php-ion/php-ion.git",
+                "reference": "d1d28cc996f760193aeca6b1f92cbbfbc3c44075"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/php-ion/php-ion/zipball/d1d28cc996f760193aeca6b1f92cbbfbc3c44075",
+                "reference": "d1d28cc996f760193aeca6b1f92cbbfbc3c44075",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=7.0"
+            },
+            "require-dev": {
+                "ext-openssl": "*",
+                "ext-pcntl": "*",
+                "ext-posix": "*",
+                "phpunit/phpunit": "*"
+            },
+            "type": "library",
+            "autoload": {
+                "classmap": [
+                    "tests/lib",
+                    "tests/cases"
+                ]
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Ivan Shalganov",
+                    "email": "a.cobest@gmail.com"
+                }
+            ],
+            "description": "PHP extension for asynchronous IO and other notifications",
+            "time": "2017-09-26T20:41:16+00:00"
+        }
+    ],
+    "packages-dev": [],
+    "aliases": [],
+    "minimum-stability": "stable",
+    "stability-flags": [],
+    "prefer-stable": false,
+    "prefer-lowest": false,
+    "platform": {
+        "php": "^7.1"
+    },
+    "platform-dev": []
+}
