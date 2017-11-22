@@ -236,3 +236,18 @@ function event_buffer_disable($bevent, int $events): bool
 {
     return fseek($bevent, \ION\PHPLibEventFallback\Wrapper\EventBufferWrapper::CMD_DISABLE);
 }
+
+/**
+ * Send a file
+ * @param resource $bevent buffer event
+ * @param resource $fd file descriptor
+ * @param int $length send specified count bytes if zero - send all file
+ * @param int $offset skip bytes
+ * @return bool
+ **/
+function event_buffer_sendfile($bevent, $fd, $length = 0, $offset = 0): bool
+{
+    $ion_stream = stream_context_get_options($bevent)["ion_stream"];
+    /* @var \ION\Stream $ion_stream */
+    $ion_stream->sendFile(stream_get_meta_data($fd)["uri"], $offset, $length == 0 ? -1 : $length);
+}

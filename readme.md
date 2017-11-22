@@ -1,12 +1,13 @@
 PHP LibEvent Fallback for PHP7
 ===
 
-The implementation of the extension [php-libevent](http://php.net/manual/en/book.libevent.php) to PHP7 via an extension to the [php-ion](https://github.com/php-ion/php-ion)
+The implementation of the extension [php-libevent](http://php.net/manual/en/book.libevent.php) for PHP7 
+via an extension to the [php-ion](https://github.com/php-ion/php-ion) ([fast install guide](https://github.com/php-ion/php-ion/blob/master/docs/install.md#ionizer))
 
 
 Currently in develop
 
-## Ported
+## Port from official
 
  - [ ] event_add — Add an event to the set of monitored events
  - [x] event_base_free — Destroy event base
@@ -38,3 +39,50 @@ Currently in develop
  - [ ] event_timer_del — Alias of event_del
  - [ ] event_timer_new — Alias of event_new
  - [ ] event_timer_set — Prepare a timer event
+ 
+# Port from forks
+
+[bzick/php-libevent](https://github.com/bzick/php-libevent):
+
+ - [ ] event_buffer_readln - Read line from buffer by EOL
+ - [ ] event_buffer_gets - Read line from buffer by any string token
+ - [ ] event_buffer_get_length - Return size of bytes in the buffer
+ - [ ] event_buffer_sendfile - Send a file
+
+```php
+/**
+ * Read line from buffer by EOL
+ * @param resource $bevent buffer event
+ * @param int $type one of constants BEV_EOL_ANY, BEV_EOL_CRLF, BEV_EOL_CRLF_STRICT, BEV_EOL_LF
+ * @return string
+ **/
+event_buffer_readln($bevent, $eol = BEV_EOL_ANY);
+
+/**
+ * Read line from buffer by any string token
+ * @param resource $bevent buffer event
+ * @param string $token
+ * @param int $type one of constants BEV_WITHOUT_TOKEN, BEV_WITH_TOKEN, BEV_TRIM_TOKEN
+ * @param string $max_length
+ * @return string|false returns false if token not found
+ **/
+event_buffer_gets($bevent, $token, $flag = BEV_TRIM_TOKEN, $max_length = 0);
+
+/**
+ * Return size of bytes in the buffer
+ * @param resource $bevent buffer event
+ * @param int $type EV_READ or EV_WRITE
+ * @return int
+ **/
+event_buffer_get_length($bevent, $type = EV_READ);
+
+/**
+ * Send file
+ * @param resource $bevent buffer event
+ * @param resource $fd file descriptor
+ * @param int $length send specified count bytes if zero - send all file
+ * @param int $offset skip bytes
+ * @return bool
+ **/
+event_buffer_sendfile($bevent, $fd, $length = 0, $offset = 0);
+```
