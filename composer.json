@@ -12,7 +12,7 @@
     "psr-4": {
        "ION\\PHPLibEventFallback\\": "src/"
     },
-    "files": ["functions.php"]
+    "files": ["constants.php", "functions.php"]
   },
 
   "require": {

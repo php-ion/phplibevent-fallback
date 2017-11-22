@@ -135,6 +135,15 @@ function event_buffer_new($stream, callable $readcb = null, callable $writecb = 
 }
 
 /**
+ * @param resource $bevent
+ * @return \ION\Stream
+ */
+function event_buffer_get_ion_stream($bevent): \ION\Stream
+{
+    return stream_context_get_options($bevent)["ion_stream"];
+}
+
+/**
  * Associate buffered event with an event base
  *
  * @param resource $event
@@ -219,6 +228,7 @@ function event_buffer_fd_set($bevent, $fd)
  * @param resource $bevent
  * @param int $events
  * @return bool
+ * @todo add $events
  */
 function event_buffer_enable($bevent, int $events): bool
 {
@@ -231,10 +241,88 @@ function event_buffer_enable($bevent, int $events): bool
  * @param resource $bevent
  * @param int $events
  * @return bool
+ * @todo add $events
  */
 function event_buffer_disable($bevent, int $events): bool
 {
     return fseek($bevent, \ION\PHPLibEventFallback\Wrapper\EventBufferWrapper::CMD_DISABLE);
+}
+
+/**
+ * Assign a priority to a buffered event
+ *
+ * @param resource $bevent
+ * @param int $priority
+ * @return bool
+ * @todo
+ */
+function event_buffer_priority_set($bevent, int $priority): bool
+{
+
+}
+
+/**
+ * Set read and write timeouts for a buffered event
+ *
+ * @param resource $bevent
+ * @param int $read_timeout
+ * @param int $write_timeout
+ * @return bool
+ * @todo
+ */
+function event_buffer_timeout_set($bevent, int $read_timeout, int $write_timeout): bool
+{
+
+}
+
+/**
+ * Set the watermarks for read and write events
+ *
+ * @param resource $bevent
+ * @param int $events
+ * @param int $lowmark
+ * @param int $highmark
+ * @todo
+ */
+function event_buffer_watermark_set($bevent, int $events, int $lowmark, int $highmark)
+{
+
+}
+
+/**
+ * Read line from buffer by EOL
+ * @param resource $bevent buffer event
+ * @param int $eol one of constants BEV_EOL_ANY, BEV_EOL_CRLF, BEV_EOL_CRLF_STRICT, BEV_EOL_LF
+ * @return string
+ * @todo
+ **/
+function event_buffer_readln($bevent, $eol = BEV_EOL_ANY): string
+{
+
+}
+
+/**
+ * Read line from buffer by any string token
+ * @param resource $bevent buffer event
+ * @param string $token
+ * @param int $type one of constants BEV_WITHOUT_TOKEN, BEV_WITH_TOKEN, BEV_TRIM_TOKEN
+ * @param int $max_length
+ * @return string|false returns false if token not found
+ **/
+function event_buffer_gets($bevent, $token, $type = BEV_TRIM_TOKEN, $max_length = 0): string
+{
+    return event_buffer_get_ion_stream($bevent)->getLine($token, $type, $max_length);
+}
+
+/**
+ * Return size of bytes in the buffer
+ * @param resource $bevent buffer event
+ * @param int $type EV_READ or EV_WRITE
+ * @return int
+ **/
+function event_buffer_get_length($bevent, $type = EV_READ): int
+{
+    return event_buffer_get_ion_stream($bevent)->getSize($type);
 }
 
 /**
@@ -247,7 +335,15 @@ function event_buffer_disable($bevent, int $events): bool
  **/
 function event_buffer_sendfile($bevent, $fd, $length = 0, $offset = 0): bool
 {
-    $ion_stream = stream_context_get_options($bevent)["ion_stream"];
-    /* @var \ION\Stream $ion_stream */
-    $ion_stream->sendFile(stream_get_meta_data($fd)["uri"], $offset, $length == 0 ? -1 : $length);
+    $ion_stream = event_buffer_get_ion_stream($bevent);
+    try {
+        /* @var \ION\Stream $ion_stream */
+        $ion_stream->sendFile(stream_get_meta_data($fd)["uri"], $offset, $length == 0 ? -1 : $length);
+
+        return true;
+    } catch (\Throwable $e) {
+        trigger_error($e, E_USER_ERROR);
+        return false;
+    }
 }
+
