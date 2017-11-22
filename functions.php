@@ -173,19 +173,66 @@ function event_buffer_write($bevent, string $data): int
 /**
  * Set or reset callbacks for a buffered event
  *
- * @param resource $event
+ * @param resource $bevent
  * @param callable $readcb
  * @param callable $writecb
  * @param callable $errorcb
  * @param mixed $arg
  * @return bool
  */
-function event_buffer_set_callback($event, callable $readcb = null, callable $writecb = null, callable $errorcb = null, $arg = null): bool
+function event_buffer_set_callback($bevent, callable $readcb = null, callable $writecb = null, callable $errorcb = null, $arg = null): bool
 {
-    stream_context_set_option($event, "ion.plf.buffer", "readcb", $readcb);
-    stream_context_set_option($event, "ion.plf.buffer", "writecb", $writecb);
-    stream_context_set_option($event, "ion.plf.buffer", "errorcb", $errorcb);
-    stream_context_set_option($event, "ion.plf.buffer", "arg", $arg);
+    stream_context_set_option($bevent, "ion.plf.buffer", "readcb", $readcb);
+    stream_context_set_option($bevent, "ion.plf.buffer", "writecb", $writecb);
+    stream_context_set_option($bevent, "ion.plf.buffer", "errorcb", $errorcb);
+    stream_context_set_option($bevent, "ion.plf.buffer", "arg", $arg);
 
     return true;
+}
+
+/**
+ * Destroy buffered event
+ *
+ * @param resource $bevent
+ */
+function event_buffer_free($bevent)
+{
+    fclose($bevent);
+}
+
+/**
+ * Change a buffered event file descriptor
+ *
+ * @param resource $bevent
+ * @param resource $fd
+ */
+function event_buffer_fd_set($bevent, $fd)
+{
+    $ion_stream = \ION\Stream::resource($fd);
+    stream_context_set_option($bevent, "ion.plf.buffer", "ion_stream", $ion_stream);
+    fseek($bevent, \ION\PHPLibEventFallback\Wrapper\EventBufferWrapper::CMD_UPDATE_STREAM);
+}
+
+/**
+ * Enable a buffered event
+ *
+ * @param resource $bevent
+ * @param int $events
+ * @return bool
+ */
+function event_buffer_enable($bevent, int $events): bool
+{
+    return fseek($bevent, \ION\PHPLibEventFallback\Wrapper\EventBufferWrapper::CMD_ENABLE);
+}
+
+/**
+ * Disable a buffered event
+ *
+ * @param resource $bevent
+ * @param int $events
+ * @return bool
+ */
+function event_buffer_disable($bevent, int $events): bool
+{
+    return fseek($bevent, \ION\PHPLibEventFallback\Wrapper\EventBufferWrapper::CMD_DISABLE);
 }

@@ -1,7 +1,4 @@
 <?php
-/**
- *
- */
 
 namespace ION\PHPLibEventFallback;
 
@@ -15,7 +12,7 @@ class PHPLibEventFallback
 
     public static function setUp()
     {
-        stream_wrapper_register("ion.plf.base", EventBaseWrapper::class);
-        stream_wrapper_register("ion.plf.buffer", EventBufferWrapper::class);
+        stream_wrapper_register(EventBaseWrapper::WRAPPER_NAME, EventBaseWrapper::class);
+        stream_wrapper_register(EventBufferWrapper::WRAPPER_NAME, EventBufferWrapper::class);
     }
 }

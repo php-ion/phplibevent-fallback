@@ -18,10 +18,10 @@ Currently in develop
  - [x] event_base_reinit — Reinitialize the event base after a fork
  - [ ] event_base_set — Associate event base with an event
  - [x] event_buffer_base_set — Associate buffered event with an event base
- - [ ] event_buffer_disable — Disable a buffered event
- - [ ] event_buffer_enable — Enable a buffered event
- - [ ] event_buffer_fd_set — Change a buffered event file descriptor
- - [ ] event_buffer_free — Destroy buffered event
+ - [x] event_buffer_disable — Disable a buffered event*
+ - [x] event_buffer_enable — Enable a buffered event*
+ - [x] event_buffer_fd_set — Change a buffered event file descriptor
+ - [x] event_buffer_free — Destroy buffered event
  - [x] event_buffer_new — Create new buffered event
  - [ ] event_buffer_priority_set — Assign a priority to a buffered event
  - [x] event_buffer_read — Read data from a buffered event
