@@ -135,6 +135,18 @@ function event_buffer_new($stream, callable $readcb = null, callable $writecb = 
 }
 
 /**
+ * Associate buffered event with an event base
+ *
+ * @param resource $event
+ * @param resource $event_base
+ * @return bool
+ */
+function event_buffer_base_set($event, $event_base)
+{
+    return true;
+}
+
+/**
  * Read data from a buffered event
  *
  * @param resource $bevent
