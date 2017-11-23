@@ -44,7 +44,7 @@ Currently in develop
 
 [bzick/php-libevent](https://github.com/bzick/php-libevent):
 
- - [ ] event_buffer_readln - Read line from buffer by EOL
+ - [x] event_buffer_readln - Read line from buffer by EOL
  - [x] event_buffer_gets - Read line from buffer by any string token
  - [x] event_buffer_get_length - Return size of bytes in the buffer
  - [x] event_buffer_sendfile - Send a file
