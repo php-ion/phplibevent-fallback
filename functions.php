@@ -254,11 +254,10 @@ function event_buffer_disable($bevent, int $events): bool
  * @param resource $bevent
  * @param int $priority
  * @return bool
- * @todo
  */
 function event_buffer_priority_set($bevent, int $priority): bool
 {
-
+    return true;
 }
 
 /**

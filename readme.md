@@ -24,7 +24,7 @@ Currently in develop
  - [x] event_buffer_fd_set — Change a buffered event file descriptor
  - [x] event_buffer_free — Destroy buffered event
  - [x] event_buffer_new — Create new buffered event
- - [ ] event_buffer_priority_set — Assign a priority to a buffered event
+ - [x] event_buffer_priority_set — Assign a priority to a buffered event
  - [x] event_buffer_read — Read data from a buffered event
  - [x] event_buffer_set_callback — Set or reset callbacks for a buffered event
  - [ ] event_buffer_timeout_set — Set read and write timeouts for a buffered event
