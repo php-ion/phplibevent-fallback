@@ -292,13 +292,33 @@ function event_buffer_watermark_set($bevent, int $events, int $lowmark, int $hig
 /**
  * Read line from buffer by EOL
  * @param resource $bevent buffer event
- * @param int $eol one of constants BEV_EOL_ANY, BEV_EOL_CRLF, BEV_EOL_CRLF_STRICT, BEV_EOL_LF
+ * @param int $eol mask of constants BEV_EOL_ANY, BEV_EOL_CRLF, BEV_EOL_CRLF_STRICT, BEV_EOL_LF
  * @return string
- * @todo
  **/
 function event_buffer_readln($bevent, $eol = BEV_EOL_ANY): string
 {
+    $ion_stream = event_buffer_get_ion_stream($bevent);
+    $matches = [];
+    if ($eol & BEV_EOL_CRLF) {
+        $matches[] = $ion_stream->search("\r\n");
+        $matches[] = $ion_stream->search("\n\r");
+    }
+    if ($eol & BEV_EOL_CRLF_STRICT) {
+        $matches[] = $ion_stream->search("\r\n");
+    }
+    if ($eol & BEV_EOL_LF) {
+        $matches[] = $ion_stream->search("\n");
+    }
 
+    $matches = array_filter($matches, function ($v) {
+        return $v !== false;
+    });
+
+    if ($matches) {
+        return min($matches);
+    } else {
+        return "";
+    }
 }
 
 /**
